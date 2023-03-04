@@ -34,3 +34,7 @@ The dataset used for model building contained 10,999 observations of 12 variable
 
 You may refer to codes in [Google Colab](https://colab.research.google.com/drive/1LEDD08hdPRJgXeMjlBI4CNf4IFVtFPTj?usp=sharing)
 
+## Tools Used
+Python 3.8.10
+Packages: pandas, numpy, matplotlib, seaborn, sklearn
+
