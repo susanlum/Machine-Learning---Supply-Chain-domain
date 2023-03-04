@@ -1,6 +1,6 @@
 # Key Insights on Supply Chain for International e-commerce company
 
-Problem Statement:
+**Problem Statement:**
 An international e-commerce company based wants to discover key insights from their customer database. They want to use some of the most advanced machine learning techniques to study their customers. The company sells electronic products.
 
 **About The Dataset:**
@@ -30,6 +30,5 @@ The dataset used for model building contained 10,999 observations of 12 variable
 
 •	**Reached on time**: It is the target variable, where 1 Indicates that the product has NOT reached on time and 0 indicates it has reached on time.
 
-You may refer to codes in Google Colab:- 
-[Google Colab](https://colab.research.google.com/drive/1LEDD08hdPRJgXeMjlBI4CNf4IFVtFPTj?usp=sharing)
+You may refer to codes in [Google Colab](https://colab.research.google.com/drive/1LEDD08hdPRJgXeMjlBI4CNf4IFVtFPTj?usp=sharing)
 
