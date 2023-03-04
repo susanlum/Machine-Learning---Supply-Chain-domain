@@ -65,5 +65,41 @@ plt.show()
 sns.countplot(x='Product_importance', data=df, hue='Reached.on.Time_Y.N')
 plt.show()
 
-# **Insights:** Based on the barplots above, high product importance does not affect customer rating. However, when product importance is high, the products have not reached on time.
+# Insights: Based on the barplots above, high product importance does not affect customer rating. However, when product importance is high, 
+# the products have not reached on time.
+
+sns.set(rc = {'figure.figsize': (10, 8)})
+sns.heatmap(df.corr(), cmap = 'PuOr', annot = True, vmin = -1, vmax = 1, center = 0);
+# annot = True -> label heatmap with correlation number
+# center=0 -> white colour at the centre
+
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+# Split the Data into Dependent and Indepedent Variables
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+
+# Make a new copy of columns used to make predictions (ie. x)
+X = df.drop('Reached.on.Time_Y.N', axis=1).copy() 
+X.head()
+
+# Make a new copy of the column of data we want to predict
+y = df['Reached.on.Time_Y.N'].copy()
+y.head()
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=0)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+# Encode the categorical variables
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+
+```
+If perform the encoding before the split, it will lead to data leakage (train-test contamination) In the sense, it will introduce new data 
+(integers of Label Encoders) and use it for the models thus it will affect the end predictions results (good validation scores but poor in deployment).
+
+After the train and validation data category already matched up, we can perform fit_transform on the train data, then only transform for the 
+validation data - based on the encoding maps from train data.
+
+Almost all feature engineering like standarisation, Normalisation etc should be done after train testsplit.
+```
+
+
 
