@@ -101,5 +101,118 @@ validation data - based on the encoding maps from train data.
 Almost all feature engineering like standarisation, Normalisation etc should be done after train testsplit.
 ```
 
+pip install category_encoders
+
+import category_encoders as ce # for category encoders
+
+# Encode the categorical variables
+# We convert the categorical features to numerical through the leave one out encoder in categorical_encoders. 
+# This leaves a single numeric feature in the place of each existing categorical feature. This is needed to apply the scaler to all features in the training data.
+encoder = ce.LeaveOneOutEncoder(return_df=True)
+
+X_train_encoded = encoder.fit_transform(X_train, y_train)
+X_test_encoded = encoder.transform(X_test)
+X_train_encoded.shape
+
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+# Standardisation of Data
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+# apply robust scaler 
+scaler = RobustScaler()
+
+X_train_scaled = scaler.fit_transform(X_train_encoded, y_train)
+X_train_scaled.shape
+
+X_train_scaled_df = pd.DataFrame(X_train_scaled, columns=X_train.columns)
+X_train_scaled_df.describe()
+
+X_test_scaled = scaler.transform(X_test_encoded)
+X_test_scaled_df = pd.DataFrame(X_test_scaled, columns=X_train.columns)
+X_test_scaled_df.describe()
+
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+# Classification Models
+#-------------------------------------------------------------------------------------------------------------------------------------------#
+
+==============
+# (1) KNN 
+==============
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train_scaled_df, y_train)
+
+y_pred = knn.predict(X_test_scaled_df)
+
+knn.score(X_test_scaled_df, y_test)
+
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+
+print(confusion_matrix(y_test, y_pred))
+
+print(classification_report(y_test, y_pred))
+
+from sklearn.model_selection import GridSearchCV
+
+parameters = {"n_neighbors": range(1, 100)}
+
+gridsearch = GridSearchCV(KNeighborsClassifier(), parameters)
+
+gridsearch.fit(X_train_scaled_df, y_train)
+
+gridsearch.best_params_
+
+y_pred = gridsearch.predict(X_test_scaled_df)
+
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+
+print(confusion_matrix(y_test, y_pred))
+
+print(classification_report(y_test, y_pred))
+
+GD = GridSearchCV(estimator=KNeighborsClassifier(),
+             param_grid={'n_neighbors': range(1, 100),
+                         'weights': ['uniform', 'distance']},cv=5)
+
+GD.fit(X_train_scaled_df, y_train)
+
+y_pred = GD.predict(X_test_scaled_df)
+
+GD.best_params_
+
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+
+print(confusion_matrix(y_test, y_pred))
+
+print(classification_report(y_test, y_pred))
+
+============================
+# (2) Logistics Regression
+============================
+# import the class
+from sklearn.linear_model import LogisticRegression
+
+# instantiate the model (using the default parameters)
+logreg = LogisticRegression()
+
+# fit the model with data
+logreg.fit(X_train_scaled_df, y_train)
+
+y_pred=logreg.predict(X_test_scaled_df)
+y_pred
+
+# import the necessary modules
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, classification_report
+
+print(confusion_matrix(y_test, y_pred))
+
+print(classification_report(y_test, y_pred))
+
+
+
+
 
 
