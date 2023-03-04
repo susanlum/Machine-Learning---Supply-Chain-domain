@@ -1,9 +1,11 @@
 # Key Insights on Supply Chain for International e-commerce company
 
-**Problem Statement:**
+## **Problem Statement:**
+
 An international e-commerce company based wants to discover key insights from their customer database. They want to use some of the most advanced machine learning techniques to study their customers. The company sells electronic products.
 
-**About The Dataset:**
+## **About The Dataset:**
+
 The dataset used for model building contained 10,999 observations of 12 variables. The details as follows:- 
 
 •	**ID**: ID Number of Customers.
